@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,17 +96,16 @@ const medicalScenarios: MedicalScenario[] = [
 
 export default function ChatPage() {
   const router = useRouter();
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentInput, setCurrentInput] = useState("");
   const [stepIndex, setStepIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [showSpecialists, setShowSpecialists] = useState(false);
-
   const [patientName, setPatientName] = useState("");
   const [description, setDescription] = useState("");
 
-  // Load from localStorage after component mounts (client-only)
   useEffect(() => {
     const name = localStorage.getItem("patientName") || "";
     const desc = localStorage.getItem("problemDescription") || "";
@@ -115,15 +114,15 @@ export default function ChatPage() {
   }, []);
 
   const scenario = useMemo(() => {
-    const match = medicalScenarios.find((s) =>
-      s.keywords.some((k) =>
-        description.toLowerCase().includes(k.toLowerCase())
-      )
+    return (
+      medicalScenarios.find((s) =>
+        s.keywords.some((k) =>
+          description.toLowerCase().includes(k.toLowerCase())
+        )
+      ) || medicalScenarios[0]
     );
-    return match || medicalScenarios[0];
   }, [description]);
 
-  // Initialize conversation on first render
   useEffect(() => {
     if (!patientName || !description || !scenario) return;
 
@@ -141,6 +140,11 @@ export default function ChatPage() {
 
     return () => clearTimeout(timeout);
   }, [patientName, description, scenario]);
+
+  // Auto-scroll to bottom when messages or typing change
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isTyping]);
 
   const handleSend = () => {
     if (!currentInput.trim() || !scenario) return;
@@ -262,9 +266,13 @@ export default function ChatPage() {
                     </div>
                   </div>
                 ))}
+
                 {isTyping && (
                   <div className="text-sm text-gray-500">Typing...</div>
                 )}
+
+                {/* Scroll anchor */}
+                <div ref={bottomRef} />
               </div>
 
               {/* Input Field */}
@@ -280,17 +288,19 @@ export default function ChatPage() {
                   Send
                 </Button>
               </div>
+              {/* View Specialists */}
+              {showSpecialists && (
+                <div className="text-center">
+                  <Button
+                    onClick={handleViewSpecialists}
+                    className="w-75 mt-10 bg-green-600 hover:bg-green-700"
+                  >
+                    View Specialists
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
-
-          {/* View Specialists */}
-          {showSpecialists && (
-            <div className="text-center">
-              <Button onClick={handleViewSpecialists} className="mt-4">
-                View Specialists
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     </div>
