@@ -103,14 +103,16 @@ export default function ChatPage() {
   const [isTyping, setIsTyping] = useState(false);
   const [showSpecialists, setShowSpecialists] = useState(false);
 
-  const patientName = useMemo(
-    () => localStorage.getItem("patientName") || "",
-    []
-  );
-  const description = useMemo(
-    () => localStorage.getItem("problemDescription") || "",
-    []
-  );
+  const [patientName, setPatientName] = useState("");
+  const [description, setDescription] = useState("");
+
+  // Load from localStorage after component mounts (client-only)
+  useEffect(() => {
+    const name = localStorage.getItem("patientName") || "";
+    const desc = localStorage.getItem("problemDescription") || "";
+    setPatientName(name);
+    setDescription(desc);
+  }, []);
 
   const scenario = useMemo(() => {
     const match = medicalScenarios.find((s) =>
@@ -123,27 +125,22 @@ export default function ChatPage() {
 
   // Initialize conversation on first render
   useEffect(() => {
-    if (!patientName || !description) {
-      router.push("/");
-      return;
-    }
+    if (!patientName || !description || !scenario) return;
 
     const intro = `Hi ${patientName}! I've reviewed your description about ${scenario.condition} pain. Let me ask you a few specific questions to better understand your condition.`;
     const firstQuestion = scenario.questions[0];
 
-    // First show the intro
     setMessages([{ id: 1, type: "ai", content: intro }]);
 
-    // Then show the first question after a short delay
     const timeout = setTimeout(() => {
       setMessages((prev) => [
         ...prev,
         { id: 2, type: "ai", content: firstQuestion },
       ]);
-    }, 1500); // 2 seconds delay
+    }, 1500);
 
     return () => clearTimeout(timeout);
-  }, [patientName, description, scenario, router]);
+  }, [patientName, description, scenario]);
 
   const handleSend = () => {
     if (!currentInput.trim() || !scenario) return;
