@@ -227,7 +227,6 @@ export default function BookingPage() {
               </div>
             </CardContent>
           </Card>
-
           {/* Booking Form */}
           <Card>
             <CardHeader>

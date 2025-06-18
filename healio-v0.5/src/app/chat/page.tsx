@@ -283,7 +283,11 @@ export default function ChatPage() {
                   placeholder="Type your answer..."
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                 />
-                <Button onClick={handleSend} disabled={!currentInput.trim()}>
+                <Button
+                  onClick={handleSend}
+                  className="bg-blue-600"
+                  disabled={!currentInput.trim()}
+                >
                   <Send className="h-4 w-4 mr-2" />
                   Send
                 </Button>

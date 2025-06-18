@@ -95,9 +95,9 @@ export function SimpleCalendar({
           "h-9 w-9 p-0 font-normal",
           isToday(day) &&
             !isSelected(day) &&
-            "bg-accent text-accent-foreground",
+            "bg-neutral-200 text-accent-foreground",
           isSelected(day) &&
-            "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+            "bg-blue-600 text-white hover:bg-primary hover:text-primary-foreground",
           isDisabled(day) &&
             "text-muted-foreground opacity-50 cursor-not-allowed"
         )}

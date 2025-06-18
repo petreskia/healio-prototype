@@ -56,3 +56,7 @@
     color: hsl(var(--foreground));
   }
 }
+
+.bg-card {
+  background-color: #fffffa;
+}
