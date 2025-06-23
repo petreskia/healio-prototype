@@ -197,13 +197,13 @@ export default function DescribePage() {
                         ?.descriptions.map((desc, index) => (
                           <div
                             key={index}
-                            className="flex items-center space-x-2"
+                            className="flex items-center space-x-2 flex-wrap"
                           >
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleQuickSymptom(desc)}
-                              className="flex-1 justify-start text-left h-auto p-2 text-xs hover:bg-blue-50 overflow-hidden"
+                              className="flex-1 justify-start text-left h-auto p-2 text-xs hover:bg-blue-50 whitespace-normal break-words"
                             >
                               {desc.substring(0, 60)}...
                             </Button>
