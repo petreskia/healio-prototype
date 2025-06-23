@@ -129,6 +129,26 @@ const specialists = {
     expertise: "Spinal alignment specialist.",
     price: 1450,
   },
+
+  // Head and nerves specialists
+  "16": {
+    name: "Dr. Camilla",
+    title: "Neurologist",
+    expertise: "Headache and migraine specialist with 18+ years experience.",
+    price: 1450,
+  },
+  "17": {
+    name: "Dr. Fredrik",
+    title: "Pain Management Specialist",
+    expertise: "Specializes in nerve pain and neuropathy treatment.",
+    price: 1450,
+  },
+  "18": {
+    name: "Dr. Silje",
+    title: "Headache Specialist",
+    expertise: "Dedicated headache clinic specialist.",
+    price: 1450,
+  },
 };
 
 export default function BookingPage() {
@@ -227,6 +247,7 @@ export default function BookingPage() {
               </div>
             </CardContent>
           </Card>
+
           {/* Booking Form */}
           <Card>
             <CardHeader>

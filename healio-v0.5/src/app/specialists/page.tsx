@@ -203,6 +203,41 @@ const specialistsByCondition: Record<string, Specialist[]> = {
       price: 1450,
     },
   ],
+  "head and nerves": [
+    {
+      id: "16",
+      name: "Dr. Camilla",
+      title: "Neurologist",
+      expertise:
+        "Headache and migraine specialist with 18+ years experience. Expert in chronic pain management and neurological disorders.",
+      rating: 4.9,
+      distance: "1.0 km",
+      availability: "Available today",
+      price: 1450,
+    },
+    {
+      id: "17",
+      name: "Dr. Fredrik",
+      title: "Pain Management Specialist",
+      expertise:
+        "Specializes in nerve pain and neuropathy treatment. Focus on non-invasive pain relief techniques.",
+      rating: 4.8,
+      distance: "1.8 km",
+      availability: "Available tomorrow",
+      price: 1450,
+    },
+    {
+      id: "18",
+      name: "Dr. Silje",
+      title: "Headache Specialist",
+      expertise:
+        "Dedicated headache clinic specialist. Expert in migraine prevention and trigger identification.",
+      rating: 4.7,
+      distance: "2.2 km",
+      availability: "Available in 2 days",
+      price: 1450,
+    },
+  ],
 };
 
 export default function SpecialistsPage() {
