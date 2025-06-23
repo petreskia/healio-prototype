@@ -203,7 +203,7 @@ export default function DescribePage() {
                               variant="ghost"
                               size="sm"
                               onClick={() => handleQuickSymptom(desc)}
-                              className="flex-1 justify-start text-left h-auto p-2 text-xs hover:bg-blue-50"
+                              className="flex-1 justify-start text-left h-auto p-2 text-xs hover:bg-blue-50 overflow-hidden"
                             >
                               {desc.substring(0, 60)}...
                             </Button>
