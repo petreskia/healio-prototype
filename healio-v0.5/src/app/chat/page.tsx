@@ -28,9 +28,7 @@ const medicalScenarios: MedicalScenario[] = [
     questions: [
       "On a scale of 1-10, how would you rate the pain intensity?",
       "Does the pain worsen when you rotate your arm upward or to the side?",
-      "Have you noticed any swelling or stiffness in the shoulder area?",
       "When did you first notice this pain? Was it after a specific activity or injury?",
-      "Do you experience pain at night or when lying on that shoulder?",
     ],
     diagnosis:
       "Based on your symptoms, you might be experiencing **Rotator Cuff Impingement**...",
@@ -42,8 +40,6 @@ const medicalScenarios: MedicalScenario[] = [
     questions: [
       "On a scale of 1-10, how would you rate the abdominal pain intensity?",
       "Is the pain localized to a specific area or does it spread across your abdomen?",
-      "Do you experience nausea, vomiting, or changes in bowel movements?",
-      "Does the pain worsen after eating or drinking?",
       "Have you noticed any bloating, fever, or loss of appetite?",
     ],
     diagnosis:
@@ -57,8 +53,6 @@ const medicalScenarios: MedicalScenario[] = [
       "On a scale of 1-10, how would you rate the knee pain intensity?",
       "Does the pain occur when you bend, straighten, or put weight on your knee?",
       "Have you noticed any swelling, stiffness, or clicking sounds?",
-      "Did the pain start after a specific injury or gradually over time?",
-      "Do you experience pain when walking up or down stairs?",
     ],
     diagnosis:
       "Based on your symptoms, you might be experiencing **Patellofemoral Pain Syndrome**...",
@@ -70,9 +64,7 @@ const medicalScenarios: MedicalScenario[] = [
     questions: [
       "On a scale of 1-10, how would you rate the foot pain intensity?",
       "Is the pain located in your heel, arch, toes, or ankle area?",
-      "Does the pain worsen when you first step out of bed in the morning?",
-      "Do you experience pain after long periods of standing or walking?",
-      "Have you noticed any swelling, numbness, or tingling sensations?",
+      "Do you experience pain after long periods of standing or walking",
     ],
     diagnosis:
       "Based on your symptoms, you might be experiencing **Plantar Fasciitis**...",
@@ -83,10 +75,8 @@ const medicalScenarios: MedicalScenario[] = [
     condition: "lower back",
     questions: [
       "On a scale of 1-10, how would you rate the back pain intensity?",
-      "Does the pain radiate down to your legs or buttocks?",
       "Is the pain worse when sitting, standing, or lying down?",
       "Do you experience any numbness, tingling, or weakness in your legs?",
-      "Did the pain start suddenly or develop gradually over time?",
     ],
     diagnosis:
       "Based on your symptoms, you might be experiencing **Lower Back Strain** or **Sciatica**...",
@@ -182,7 +172,7 @@ export default function ChatPage() {
         const specialistsMsg: Message = {
           id: messages.length + 3,
           type: "ai",
-          content: `I've found 3 ${scenario.condition} specialists in Oslo who can help you. Would you like to see them?`,
+          content: `I've found 3 ${scenario.condition} specialists in Oslo who can help you.`,
         };
 
         setMessages((prev) => [...prev, diagnosis, specialistsMsg]);
@@ -205,6 +195,13 @@ export default function ChatPage() {
     localStorage.setItem("chatSummary", JSON.stringify(summary));
     router.push("/specialists");
   };
+
+  const isInputDisabled = messages.some(
+    (msg) =>
+      msg.type === "ai" &&
+      msg.content ===
+        `I've found 3 ${scenario.condition} specialists in Oslo who can help you.`
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -282,6 +279,7 @@ export default function ChatPage() {
                   onChange={(e) => setCurrentInput(e.target.value)}
                   placeholder="Type your answer..."
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                  disabled={isInputDisabled}
                 />
                 <Button
                   onClick={handleSend}
