@@ -115,17 +115,17 @@ export default function DescribePage() {
     setDescription(symptomDescription);
   };
 
-  const handleAddToDescription = (symptomDescription: string) => {
-    if (description.trim()) {
-      setDescription(description + " " + symptomDescription);
-    } else {
-      setDescription(symptomDescription);
-    }
-  };
+  // const handleAddToDescription = (symptomDescription: string) => {
+  //   if (description.trim()) {
+  //     setDescription(description + " " + symptomDescription);
+  //   } else {
+  //     setDescription(symptomDescription);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
         {/* Header */}
         <div className="flex items-center mb-8">
           <Button
@@ -152,7 +152,7 @@ export default function DescribePage() {
                 Let&#39;s start by understanding what&#39;s bothering you.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
               {/* Quick Symptom Categories */}
               <div>
                 <div className="flex items-center mb-4">
@@ -161,7 +161,7 @@ export default function DescribePage() {
                     Quick symptom categories:
                   </span>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                   {quickSymptoms.map((category, index) => (
                     <Button
                       key={index}
@@ -177,47 +177,45 @@ export default function DescribePage() {
                             : category.category
                         )
                       }
-                      className="h-auto p-3 flex flex-col items-center space-y-1 text-xs"
+                      className="h-auto p-2 sm:p-3 flex flex-col items-center space-y-1 text-xs w-full"
                     >
-                      <span className="text-lg">{category.icon}</span>
-                      <span className="font-medium">{category.category}</span>
+                      <span className="text-base sm:text-lg">
+                        {category.icon}
+                      </span>
+                      <span className="font-medium text-center leading-tight">
+                        {category.category}
+                      </span>
                     </Button>
                   ))}
                 </div>
 
                 {/* Specific Symptoms for Selected Category */}
                 {selectedCategory && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-gray-900 mb-3">
+                  <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                    <h4 className="font-medium text-gray-900 mb-3 text-sm sm:text-base">
                       Common {selectedCategory.toLowerCase()} issues:
                     </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div className="space-y-2">
                       {quickSymptoms
                         .find((cat) => cat.category === selectedCategory)
                         ?.descriptions.map((desc, index) => (
                           <div
                             key={index}
-                            className="flex items-center space-x-2"
+                            className="flex items-start space-x-2"
                           >
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => handleQuickSymptom(desc)}
-                              className="flex-1 justify-start text-left h-auto p-2 text-xs hover:bg-blue-50 whitespace-normal break-words"
+                              className="flex-1 justify-start text-left h-auto p-2 text-xs hover:bg-blue-50 min-h-[2.5rem] whitespace-normal"
                             >
-                              {desc.substring(0, 60)}...
-                            </Button>
-                            {description.trim() && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleAddToDescription(desc)}
-                                className="p-1 h-6 w-6"
-                                title="Add to description"
-                              >
+                              <div className="flex gap-3 items-center">
                                 <Plus className="h-3 w-3" />
-                              </Button>
-                            )}
+                                <span className="break-words leading-relaxed">
+                                  {desc}
+                                </span>
+                              </div>
+                            </Button>
                           </div>
                         ))}
                     </div>
@@ -226,10 +224,10 @@ export default function DescribePage() {
               </div>
 
               {/* Description Textarea */}
-              <div>
+              <div className="space-y-2">
                 <label
                   htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-gray-700"
                 >
                   Please describe your health concern or symptoms:
                 </label>
@@ -238,25 +236,29 @@ export default function DescribePage() {
                   placeholder="For example: I've been having pain in my shoulder for the past week. It hurts when I lift my arm or reach overhead..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-32 w-full"
+                  className="min-h-24 sm:min-h-32 w-full resize-none overflow-hidden"
+                  rows={4}
                 />
                 {description.trim() && (
-                  <div className="mt-2 flex justify-end">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs text-gray-500">
+                    <span className="truncate">
+                      {description.length} characters
+                    </span>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setDescription("")}
-                      className="text-xs text-gray-500 hover:text-gray-700"
+                      className="text-xs text-gray-500 hover:text-gray-700 h-auto p-1 self-start sm:self-auto"
                     >
-                      Clear description
+                      Clear
                     </Button>
                   </div>
                 )}
               </div>
 
               {/* Tips */}
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-blue-800">
+              <div className="bg-blue-50 p-3 sm:p-4 rounded-lg">
+                <p className="text-xs sm:text-sm text-blue-800">
                   <strong>Tip:</strong> Use the quick categories above to get
                   started, then add more details in the text area. The more
                   specific you are, the better our AI can help you.
