@@ -197,7 +197,7 @@ export default function DescribePage() {
                         ?.descriptions.map((desc, index) => (
                           <div
                             key={index}
-                            className="flex items-center space-x-2 flex-wrap"
+                            className="flex items-center space-x-2"
                           >
                             <Button
                               variant="ghost"
